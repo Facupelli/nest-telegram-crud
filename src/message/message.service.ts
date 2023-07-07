@@ -6,6 +6,26 @@ import { PostMessagetDto } from './dto';
 import {map, catchError, lastValueFrom} from "rxjs"
 import { ForbiddenException } from '@nestjs/common';
 
+type PostResponse = {
+    ok: boolean,
+    result: {
+      message_id: number,
+      from: {
+        id: number,
+        is_bot: boolean,
+        first_name: string,
+        username: string 
+      },
+      chat: {
+        first_name: string, 
+        username: string, 
+        type: string, 
+      },
+      date: number,
+      text: string 
+    }
+}
+
 @Injectable()
 export class MessageService {
   constructor(
@@ -29,10 +49,10 @@ export class MessageService {
       }),
     );
 
-    const response = await lastValueFrom(request)
+    const response : PostResponse = await lastValueFrom(request)
 
     await this.collection.add({
-      name:dto.text
+      name:response.result.text
     })
     const todos = await this.collection.doc().get()
 
