@@ -6,7 +6,7 @@ export class ChatWebookController {
   constructor(private ChatWebhookServie: ChatWebhookService) {}
 
   @Post()
-  handleIncomingEvent() {
-    return 'webhook';
+  handleIncomingEvent(update) {
+    return this.ChatWebhookServie.handleIncomingEvents(update);
   }
 }

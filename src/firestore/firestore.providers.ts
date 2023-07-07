@@ -1,11 +1,4 @@
-import { Timestamp } from '@google-cloud/firestore';
-
-export class TodoDocument {
-  static collectionName = 'todos';
-
-  name: string;
-  dueDate: Timestamp;
-}
+import { TodoDocument } from "src/chat/chat.document";
 
 export const FirestoreDatabaseProvider = 'firestoredb';
 export const FirestoreOptionsProvider = 'firestoreOptions';
