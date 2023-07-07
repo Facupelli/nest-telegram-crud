@@ -1,4 +1,4 @@
-import { Get } from '@nestjs/common';
+import { Body, Get } from '@nestjs/common';
 import { Controller, Post } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 
@@ -7,7 +7,7 @@ export class WebhookController {
   constructor(private WebhookServie: WebhookService) {}
 
   @Post()
-  handleIncomingEvent(update) {
+  handleIncomingEvent(@Body() update) {
     return this.WebhookServie.handleIncomingEvents(update);
   }
 
