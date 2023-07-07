@@ -9,11 +9,7 @@ export class WebhookService {
   private collection: CollectionReference<MessageDocument>){}
 
   async handleIncomingEvents(update) {
-    const {message} = update
-
-    await this.collection.add({
-      name: message.text
-    })
+    console.log(update)
 
     return true;
   }
