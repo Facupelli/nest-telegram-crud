@@ -1,12 +1,12 @@
 import { CollectionReference } from '@google-cloud/firestore';
 import { Inject, Injectable } from '@nestjs/common/decorators';
-import { TodoDocument } from 'src/chat/chat.document';
+import { MessageDocument } from 'src/message/message.document';
 
 @Injectable()
-export class ChatWebhookService {
+export class WebhookService {
 
-  constructor(@Inject(TodoDocument.collectionName)
-  private collection: CollectionReference<TodoDocument>){}
+  constructor(@Inject(MessageDocument.collectionName)
+  private collection: CollectionReference<MessageDocument>){}
 
   async handleIncomingEvents(update) {
     const {message} = update

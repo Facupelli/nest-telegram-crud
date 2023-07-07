@@ -1,7 +1,8 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
+import { WebhookModule } from './webhook/webhook.module';
 import { FirestoreModule } from './firestore/firestore.module';
 
 @Module({
@@ -17,7 +18,8 @@ import { FirestoreModule } from './firestore/firestore.module';
       inject: [ConfigService],
     }),
 
-    ChatModule,
+    MessageModule,
+    WebhookModule
   ],
 })
 export class AppModule {}

@@ -1,16 +1,16 @@
 import { CollectionReference } from '@google-cloud/firestore';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Inject } from '@nestjs/common';
-import { TodoDocument } from './chat.document';
+import { MessageDocument } from './message.document';
 import { PostMessagetDto } from './dto';
 import {map, catchError, lastValueFrom} from "rxjs"
 import { ForbiddenException } from '@nestjs/common';
 
 @Injectable()
-export class ChatService {
+export class MessageService {
   constructor(
-    @Inject(TodoDocument.collectionName)
-    private collection: CollectionReference<TodoDocument>,
+    @Inject(MessageDocument.collectionName)
+    private collection: CollectionReference<MessageDocument>,
     private readonly httpService: HttpService
   ) {}
 
