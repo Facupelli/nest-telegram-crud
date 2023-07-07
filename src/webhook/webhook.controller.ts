@@ -2,7 +2,7 @@ import { Get } from '@nestjs/common';
 import { Controller, Post } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 
-@Controller('bot/telegram')
+@Controller('webhook')
 export class WebhookController {
   constructor(private WebhookServie: WebhookService) {}
 
