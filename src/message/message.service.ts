@@ -51,9 +51,8 @@ export class MessageService {
 
     const response : PostResponse = await lastValueFrom(request)
 
-    await this.collection.add({
-      name:response.result.text
-    })
+    await this.collection.add(response.result)
+    
     const todos = await this.collection.doc().get()
 
     return {todos, response};

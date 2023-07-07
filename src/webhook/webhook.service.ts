@@ -13,9 +13,7 @@ export class WebhookService {
     console.log(update)
 
     if(update.message){
-      await this.collection.add({
-        name:update.message.text
-      })
+      await this.collection.add(update.message)
     }
 
     return true;
