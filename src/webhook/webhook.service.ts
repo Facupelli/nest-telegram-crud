@@ -3,6 +3,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Inject, Injectable } from '@nestjs/common/decorators';
 import { MessageDocument } from 'src/message/message.document';
 import { MessageService } from 'src/message/message.service';
+import { InfoCommand } from './commands/info.command';
 import { StartCommand } from './commands/start.command';
 import { Update } from './types';
 
@@ -14,8 +15,9 @@ export class WebhookService {
     @Inject(MessageDocument.collectionName)
     private collection: CollectionReference<MessageDocument>,
     private startCommand: StartCommand,
+    private infoCommand: InfoCommand,
   ) {
-    this.commands = [this.startCommand];
+    this.commands = [this.startCommand, this.infoCommand];
   }
 
   private async saveMessage(message) {

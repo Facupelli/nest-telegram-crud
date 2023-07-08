@@ -55,3 +55,8 @@ La API escucha los webhooks enviados por la API de Telegram, de modo que los men
   text: "el nuevo texto del mensaje"
 }
 </pre>
+
+### Lista de comandos:
+
+- /start
+- /info
