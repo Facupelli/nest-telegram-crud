@@ -9,8 +9,8 @@ import { Update } from './webhook.controller';
 export class WebhookService {
   constructor(
     @Inject(MessageDocument.collectionName)
-    private messageService: MessageService,
     private collection: CollectionReference<MessageDocument>,
+    private messageService: MessageService,
   ) {}
 
   async handleIncomingEvents(update: Update) {
