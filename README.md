@@ -8,13 +8,17 @@ Este proyecto es parte de un desafío desarrollado para la empresa Fidoo. Consis
 
 ## Cómo usar
 
-1. Acceder al bot de telegram: **nest_telegram_crud_bot**, mediante el siguiente enlace https://t.me/nest_telegram_crud_bot/
+1. Acceder al bot de telegram: **nest_telegram_crud_bot**, mediante el siguiente enlace https://t.me/nest_telegram_crud_bot/ (probar desde el celular si no abre el chat)
 
 2. Enviar el siguiente commando: **/start**
 
 3. El bot te responderá con el ID de tu chat, el cual necesitarás para interactuar con la API.
 
 4. Una vez que obtengas el chat_id, puedes realizar las siguientes solicitudes a la API en la ruta **/messages** utilizando la URL de la API: https://nest-telegram-crud.adaptable.app
+
+<br>
+
+https://nest-telegram-crud.adaptable.app/messages
 
 <br>
 
