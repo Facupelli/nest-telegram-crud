@@ -15,7 +15,8 @@ export class WebhookService {
 
   async handleIncomingEvents(update: Update) {
     if (
-      update.message.entities[0]?.type === 'bot_command' &&
+      update.message.entities &&
+      update.message.entities[0].type === 'bot_command' &&
       update.message.text === '/start'
     ) {
       const chat_id = update.message.chat.id;
