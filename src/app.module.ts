@@ -14,12 +14,12 @@ import { FirestoreModule } from './firestore/firestore.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         keyFilename: configService.get<string>('SA_KEY'),
+        projectId: configService.get<string>('PROJECT_ID'),
       }),
       inject: [ConfigService],
     }),
-
     MessageModule,
-    WebhookModule
+    WebhookModule,
   ],
 })
 export class AppModule {}
