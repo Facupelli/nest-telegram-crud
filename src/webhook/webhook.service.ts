@@ -13,6 +13,17 @@ export class WebhookService {
     private messageService: MessageService,
   ) {}
 
+  private async sendStartMessage(chat_id: number) {
+    await this.messageService.postMessage({
+      chat_id,
+      text: `Hola! tu chat_id para que pruebes la API es ${chat_id}`,
+    });
+  }
+
+  private async saveMessage(message) {
+    await this.collection.add(message);
+  }
+
   async handleIncomingEvents(update: Update) {
     if (
       update.message.entities &&
@@ -20,14 +31,11 @@ export class WebhookService {
       update.message.text === '/start'
     ) {
       const chat_id = update.message.chat.id;
-      this.messageService.postMessage({
-        chat_id,
-        text: `Hola! tu chat_id para que pruebes la API es ${chat_id}`,
-      });
+      await this.sendStartMessage(chat_id);
     }
 
     if (update.message) {
-      await this.collection.add(update.message);
+      await this.saveMessage(update.message);
       return true;
     }
 
