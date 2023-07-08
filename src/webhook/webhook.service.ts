@@ -3,15 +3,21 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Inject, Injectable } from '@nestjs/common/decorators';
 import { MessageDocument } from 'src/message/message.document';
 import { MessageService } from 'src/message/message.service';
+import { StartCommand } from './commands/start.command';
 import { Update } from './types';
 
 @Injectable()
 export class WebhookService {
+  private commands = [];
+
   constructor(
     @Inject(MessageDocument.collectionName)
     private collection: CollectionReference<MessageDocument>,
     private messageService: MessageService,
-  ) {}
+    private startCommand: StartCommand,
+  ) {
+    this.commands = [startCommand];
+  }
 
   private async sendStartMessage(chat_id: number) {
     await this.messageService.postMessage({
@@ -27,11 +33,16 @@ export class WebhookService {
   async handleIncomingEvents(update: Update) {
     if (
       update.message.entities &&
-      update.message.entities[0].type === 'bot_command' &&
-      update.message.text === '/start'
+      update.message.entities[0].type === 'bot_command'
     ) {
-      const chat_id = update.message.chat.id;
-      await this.sendStartMessage(chat_id);
+      // const chat_id = update.message.chat.id;
+      // await this.sendStartMessage(chat_id);
+
+      const command = update.message.text;
+      const matchedCommand = this.commands.find(
+        (cmd) => cmd.getName() === command,
+      );
+      matchedCommand.handleCommand(update);
     }
 
     if (update.message) {
