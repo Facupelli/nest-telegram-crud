@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
-import { DeleteMessagetDto, PostMessagetDto } from './dto';
+import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
 
 @Controller('message')
 export class MessageController {
@@ -25,8 +25,8 @@ export class MessageController {
   }
 
   @Put()
-  updateMessage() {
-    return this.messageService.updateMessage;
+  updateMessage(@Body() updateMessageDto: UpdateMessagetDto) {
+    return this.messageService.updateMessage(updateMessageDto);
   }
 
   @Delete()

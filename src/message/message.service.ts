@@ -9,7 +9,7 @@ import {
 import { map, catchError, lastValueFrom } from 'rxjs';
 
 import { MessageDocument } from './message.document';
-import { DeleteMessagetDto, PostMessagetDto } from './dto';
+import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
 import { PostResponse } from './types';
 
 @Injectable()
@@ -52,8 +52,24 @@ export class MessageService {
     throw new InternalServerErrorException('message could not be sent');
   }
 
-  updateMessage() {
-    return 'update message';
+  async updateMessage(dto: UpdateMessagetDto) {
+    const request = this.httpService
+      .post(
+        'https://api.telegram.org/bot6348267525:AAG4GXEa0E5yDdYXbNVgWwLLub9A_m1w7hY/editMessageText',
+        dto,
+      )
+      .pipe(map((res) => res.data))
+      .pipe(
+        catchError((e) => {
+          throw new ForbiddenException('API not available');
+        }),
+      );
+
+    const response = await lastValueFrom(request);
+
+    console.log(response);
+
+    return true;
   }
 
   async deleteMessage(dto: DeleteMessagetDto) {
