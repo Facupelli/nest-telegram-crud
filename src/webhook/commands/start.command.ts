@@ -7,7 +7,7 @@ export class StartCommand {
   constructor(private messageService: MessageService) {}
 
   getName() {
-    return 'start';
+    return '/start';
   }
 
   private async sendStartMessage(chat_id: number) {
