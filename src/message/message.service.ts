@@ -1,34 +1,16 @@
 import { CollectionReference } from '@google-cloud/firestore';
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Inject } from '@nestjs/common';
-import { MessageDocument } from './message.document';
-import { DeleteMessagetDto, PostMessagetDto } from './dto';
-import { map, catchError, lastValueFrom } from 'rxjs';
 import {
+  Injectable,
+  Inject,
   ForbiddenException,
-  NotFoundException,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { map, catchError, lastValueFrom } from 'rxjs';
 
-type PostResponse = {
-  ok: boolean;
-  result: {
-    message_id: number;
-    from: {
-      id: number;
-      is_bot: boolean;
-      first_name: string;
-      username: string;
-    };
-    chat: {
-      first_name: string;
-      username: string;
-      type: string;
-    };
-    date: number;
-    text: string;
-  };
-};
+import { MessageDocument } from './message.document';
+import { DeleteMessagetDto, PostMessagetDto } from './dto';
+import { PostResponse } from './types';
 
 @Injectable()
 export class MessageService {

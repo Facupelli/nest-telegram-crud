@@ -3,7 +3,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Inject, Injectable } from '@nestjs/common/decorators';
 import { MessageDocument } from 'src/message/message.document';
 import { MessageService } from 'src/message/message.service';
-import { Update } from './webhook.controller';
+import { Update } from './types';
 
 @Injectable()
 export class WebhookService {
