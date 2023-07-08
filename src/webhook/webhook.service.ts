@@ -16,7 +16,7 @@ export class WebhookService {
     private messageService: MessageService,
     private startCommand: StartCommand,
   ) {
-    this.commands = [startCommand];
+    this.commands = [this.startCommand];
   }
 
   private async sendStartMessage(chat_id: number) {
@@ -42,7 +42,10 @@ export class WebhookService {
       const matchedCommand = this.commands.find(
         (cmd) => cmd.getName() === command,
       );
-      matchedCommand.handleCommand(update);
+      console.log(matchedCommand);
+      if (matchedCommand) {
+        matchedCommand.handleCommand(update);
+      }
     }
 
     if (update.message) {
