@@ -43,6 +43,8 @@ export class WebhookService {
       return true;
     }
 
-    throw new InternalServerErrorException('new incoming message error');
+    throw new InternalServerErrorException(
+      'new incoming event is not a message',
+    );
   }
 }
