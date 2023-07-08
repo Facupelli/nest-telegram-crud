@@ -10,7 +10,7 @@ import { map, catchError, lastValueFrom } from 'rxjs';
 
 import { MessageDocument } from './message.document';
 import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
-import { PostResponse } from './types';
+import { PostResponse, UpdateResponse } from './types';
 
 @Injectable()
 export class MessageService {
@@ -19,6 +19,25 @@ export class MessageService {
     private collection: CollectionReference<MessageDocument>,
     private readonly httpService: HttpService,
   ) {}
+
+  private sendTelegramRequest<T>(
+    method: string,
+    dto: PostMessagetDto | UpdateMessagetDto | DeleteMessagetDto | undefined,
+  ): Promise<T> {
+    return lastValueFrom(
+      this.httpService
+        .post(
+          `https://api.telegram.org/bot6348267525:AAG4GXEa0E5yDdYXbNVgWwLLub9A_m1w7hY/${method}`,
+          dto,
+        )
+        .pipe(map((res) => res.data))
+        .pipe(
+          catchError((e) => {
+            throw new ForbiddenException('API not available');
+          }),
+        ),
+    );
+  }
 
   async getAllMessages(chat_id: number) {
     const snapshot = await this.collection
@@ -30,19 +49,10 @@ export class MessageService {
   }
 
   async postMessage(dto: PostMessagetDto) {
-    const request = this.httpService
-      .post(
-        'https://api.telegram.org/bot6348267525:AAG4GXEa0E5yDdYXbNVgWwLLub9A_m1w7hY/sendMessage',
-        dto,
-      )
-      .pipe(map((res) => res.data))
-      .pipe(
-        catchError(() => {
-          throw new ForbiddenException('API not available');
-        }),
-      );
-
-    const response: PostResponse = await lastValueFrom(request);
+    const response: PostResponse = await this.sendTelegramRequest(
+      'sendMessage',
+      dto,
+    );
 
     if (response.ok) {
       await this.collection.add(response.result);
@@ -53,41 +63,21 @@ export class MessageService {
   }
 
   async updateMessage(dto: UpdateMessagetDto) {
-    const request = this.httpService
-      .post(
-        'https://api.telegram.org/bot6348267525:AAG4GXEa0E5yDdYXbNVgWwLLub9A_m1w7hY/editMessageText',
-        dto,
-      )
-      .pipe(map((res) => res.data))
-      .pipe(
-        catchError((e) => {
-          throw new ForbiddenException('API not available');
-        }),
-      );
+    const response: UpdateResponse = await this.sendTelegramRequest(
+      'editMessageText',
+      dto,
+    );
 
-    const response = await lastValueFrom(request);
+    if (response.ok) {
+      return true;
+    }
 
-    console.log(response);
-
-    return true;
+    throw new InternalServerErrorException('message could not be edited');
   }
 
   async deleteMessage(dto: DeleteMessagetDto) {
-    const request = this.httpService
-      .post(
-        'https://api.telegram.org/bot6348267525:AAG4GXEa0E5yDdYXbNVgWwLLub9A_m1w7hY/deleteMessage',
-        dto,
-      )
-      .pipe(map((res) => res.data))
-      .pipe(
-        catchError(() => {
-          throw new ForbiddenException('API not available');
-        }),
-      );
-
-    const response: { ok: boolean; result: boolean } = await lastValueFrom(
-      request,
-    );
+    const response: { ok: boolean; result: boolean } =
+      await this.sendTelegramRequest('deleteMessage', dto);
 
     if (response.result) {
       const message = await this.collection.where(
