@@ -69,6 +69,16 @@ export class MessageService {
     );
 
     if (response.ok) {
+      const message = await this.collection.where(
+        'message_id',
+        '==',
+        dto.message_id,
+      );
+      message.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({ text: dto.text });
+        });
+      });
       return true;
     }
 
