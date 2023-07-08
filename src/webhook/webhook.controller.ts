@@ -11,9 +11,4 @@ export class WebhookController {
   handleIncomingEvent(@Body() update: Update) {
     return this.WebhookServie.handleIncomingEvents(update);
   }
-
-  @Get()
-  caca() {
-    return 'pis';
-  }
 }
