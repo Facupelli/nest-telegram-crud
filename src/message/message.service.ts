@@ -49,7 +49,6 @@ export class MessageService {
       return true;
     }
 
-    return { message: 'message could not be sent' };
     throw new InternalServerErrorException('message could not be sent');
   }
 
@@ -88,9 +87,6 @@ export class MessageService {
       return true;
     }
 
-    console.log(response);
-
-    return { message: 'message could not be deleted' };
     throw new InternalServerErrorException('message could not be deleted');
   }
 }

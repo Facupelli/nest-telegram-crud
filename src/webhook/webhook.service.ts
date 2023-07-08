@@ -14,8 +14,6 @@ export class WebhookService {
   ) {}
 
   async handleIncomingEvents(update: Update) {
-    console.log(update);
-
     if (
       update.message.entities[0]?.type === 'bot_command' &&
       update.message.text === '/start'
