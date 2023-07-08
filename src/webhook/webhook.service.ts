@@ -17,7 +17,7 @@ export class WebhookService {
     console.log(update);
 
     if (
-      update.message.entities[0].type === 'bot_command' &&
+      update.message.entities[0]?.type === 'bot_command' &&
       update.message.text === '/start'
     ) {
       const chat_id = update.message.chat.id;
