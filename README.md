@@ -37,11 +37,21 @@ La API escucha los webhooks enviados por la API de Telegram, de modo que los men
 
 <br>
 
-**Borrar un mensaje**. Hacer un **DELETE** a la api para borrar un mensaje, deben proporcionar el siguiente body:
+**Borrar un mensaje**. Realiza una solicitud **DELETE** a la api para borrar un mensaje, deben proporcionar el siguiente body:
 
 <pre>
 {
   chat_id: tu-chat-id,
   message_id: "el ID del mensaje a eliminar"
+}
+</pre>
+
+**Editar un mensaje**. Realiza una solicitud **PUT** a la api para editar un mensaje. Es importante destacar que solo se pueden editar los mensajes enviados por el Bot, y dentro de un periodo limitado de tiempo. Deben proporcionar el siguiente body:
+
+<pre>
+{
+  chat_id: tu-chat-id,
+  message_id: "el ID del mensaje a eliminar",
+  text: "el nuevo texto del mensaje"
 }
 </pre>
