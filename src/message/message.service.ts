@@ -4,7 +4,11 @@ import { Injectable, Inject } from '@nestjs/common';
 import { MessageDocument } from './message.document';
 import { DeleteMessagetDto, PostMessagetDto } from './dto';
 import { map, catchError, lastValueFrom } from 'rxjs';
-import { ForbiddenException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 type PostResponse = {
   ok: boolean;
@@ -55,9 +59,11 @@ export class MessageService {
 
     if (response.ok) {
       await this.collection.add(response.result);
+      return true;
     }
 
-    return true;
+    return { message: 'message could not be sent' };
+    throw new InternalServerErrorException('message could not be sent');
   }
 
   updateMessage() {
@@ -92,10 +98,12 @@ export class MessageService {
           await doc.ref.delete();
         });
       });
+      return true;
     }
 
     console.log(response);
 
-    return true;
+    return { message: 'message could not be deleted' };
+    throw new InternalServerErrorException('message could not be deleted');
   }
 }
