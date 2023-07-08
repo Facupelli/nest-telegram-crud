@@ -1,12 +1,11 @@
-import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { MessageService } from 'src/message/message.service';
+import { MessageModule } from 'src/message/message.module';
 import { WebhookController } from './webhook.controller';
 import { WebhookService } from './webhook.service';
 
 @Module({
+  imports: [MessageModule],
   controllers: [WebhookController],
-  providers: [WebhookService, MessageService],
-  imports: [HttpModule],
+  providers: [WebhookService],
 })
 export class WebhookModule {}

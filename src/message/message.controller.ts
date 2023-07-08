@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { MessageService } from './message.service';
 import { DeleteMessagetDto, PostMessagetDto } from './dto';
 
@@ -6,8 +15,8 @@ import { DeleteMessagetDto, PostMessagetDto } from './dto';
 export class MessageController {
   constructor(private messageService: MessageService) {}
   @Get()
-  getAllMessages() {
-    return this.messageService.getAllMessages();
+  getAllMessages(@Query('chat_id', ParseIntPipe) chat_id: number) {
+    return this.messageService.getAllMessages(chat_id);
   }
 
   @Post()
