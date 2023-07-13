@@ -14,11 +14,11 @@ Este proyecto es parte de un desafío desarrollado para la empresa Fidoo. Consis
 
 3. El bot te responderá con el ID de tu chat, el cual necesitarás para interactuar con la API.
 
-4. Una vez que obtengas el chat_id, puedes realizar las siguientes solicitudes a la API en la ruta **/messages** utilizando la URL de la API: https://nest-telegram-crud.adaptable.app
+4. Una vez que obtengas el chat_id, puedes realizar las siguientes solicitudes a la API en la ruta **/message** utilizando la URL de la API: https://nest-telegram-crud.adaptable.app
 
 <br>
 
-https://nest-telegram-crud.adaptable.app/messages
+https://nest-telegram-crud.adaptable.app/message
 
 <br>
 

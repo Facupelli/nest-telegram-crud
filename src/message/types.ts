@@ -19,7 +19,7 @@ export interface PostResponse {
 }
 
 export interface UpdateResponse {
-  ok: true;
+  ok: boolean;
   result: {
     message_id: number;
     from: {
