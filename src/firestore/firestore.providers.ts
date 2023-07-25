@@ -1,4 +1,4 @@
-import { MessageDocument } from "src/message/message.document";
+import { MessageDocument } from 'src/message/entities/message.document';
 
 export const FirestoreDatabaseProvider = 'firestoredb';
 export const FirestoreOptionsProvider = 'firestoreOptions';

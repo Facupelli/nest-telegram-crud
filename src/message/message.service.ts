@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { map, catchError, lastValueFrom } from 'rxjs';
 
-import { MessageDocument } from './message.document';
+import { MessageDocument } from './entities/message.document';
 import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
 import { PostResponse, UpdateResponse } from './types';
 
@@ -32,20 +32,25 @@ export class MessageService {
         )
         .pipe(map((res) => res.data))
         .pipe(
-          catchError((e) => {
-            throw new ForbiddenException('API not available');
+          catchError((error) => {
+            throw new ForbiddenException(`API not available ${error}`);
           }),
         ),
     );
   }
 
   async getAllMessages(chat_id: number) {
-    const snapshot = await this.collection
-      .where('chat.id', '==', chat_id)
-      .get();
-    const messages = snapshot.docs.map((doc) => doc.data());
+    try {
+      const snapshot = await this.collection
+        .where('chat.id', '==', chat_id)
+        .get();
+      const messages = snapshot.docs.map((doc) => doc.data());
 
-    return messages;
+      return messages;
+    } catch (error) {
+      console.log(error);
+      throw new ForbiddenException(error);
+    }
   }
 
   async postMessage(dto: PostMessagetDto) {

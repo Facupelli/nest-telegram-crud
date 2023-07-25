@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/decorators/role.enum';
 
 @Controller('message')
 export class MessageController {
@@ -20,16 +22,19 @@ export class MessageController {
   }
 
   @Post()
+  @Roles(Role.Admin)
   postMessage(@Body() postMessageDto: PostMessagetDto) {
     return this.messageService.postMessage(postMessageDto);
   }
 
   @Put()
+  @Roles(Role.Admin)
   updateMessage(@Body() updateMessageDto: UpdateMessagetDto) {
     return this.messageService.updateMessage(updateMessageDto);
   }
 
   @Delete()
+  @Roles(Role.Admin)
   deleteMessage(@Body() deleteMessageDto: DeleteMessagetDto) {
     return this.messageService.deleteMessage(deleteMessageDto);
   }
