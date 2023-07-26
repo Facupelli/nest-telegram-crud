@@ -1,14 +1,13 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { AuthModule } from 'src/auth/auth.module';
 import { MessageController } from './message.controller';
 import { MessageService } from './message.service';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Module({
   controllers: [MessageController],
-  providers: [MessageService, { provide: APP_GUARD, useClass: RolesGuard }],
-  imports: [HttpModule],
+  providers: [MessageService],
+  imports: [HttpModule, AuthModule],
   exports: [MessageService],
 })
 export class MessageModule {}

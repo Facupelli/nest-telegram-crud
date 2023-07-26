@@ -7,13 +7,18 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { DeleteMessagetDto, PostMessagetDto, UpdateMessagetDto } from './dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/decorators/role.enum';
+import { AuthGuard } from 'src/common/guards/auth.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('message')
+@UseGuards(AuthGuard)
+@UseGuards(RolesGuard)
 export class MessageController {
   constructor(private messageService: MessageService) {}
   @Get()

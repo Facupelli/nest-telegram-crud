@@ -1,6 +1,9 @@
 import { Role } from 'src/common/decorators/role.enum';
 
 export class User {
-  name: string;
+  uid: string;
+  email: string;
+  emailVerified: boolean;
+  disabled: boolean;
   roles: Role[];
 }
