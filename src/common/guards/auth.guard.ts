@@ -10,8 +10,8 @@ import admin from 'src/main';
 export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-
     const token = this.extractTokenFromHeader(request);
+
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -30,8 +30,13 @@ export class AuthGuard implements CanActivate {
       if (decodedToken) {
         return true;
       }
-    } catch (error) {
+
       return false;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new UnauthorizedException(error.message);
+      }
+      throw new UnauthorizedException();
     }
   }
 }
